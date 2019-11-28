@@ -5,16 +5,26 @@ import com.study.lab1.model.Account;
 import com.study.lab1.model.Request;
 import com.study.lab1.service.AccountService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:application-context.xml")
 public class FlowTest {
-    @Test
-    public void testSuccessWidthdrawRequest() {
-        RequestHandler requestHandler = new RequestHandler();
-        AccountService accountService = requestHandler.getAccountService();
 
+    @Autowired RequestHandler requestHandler;
+    @Autowired AccountService accountService;
+
+    @Test
+    @DirtiesContext
+    public void testSuccessWidthdrawRequest() {
         // prepare
         Account accountFromBeforeRequest = accountService.getAccount(1);
         Account accountToBeforeRequest = accountService.getAccount(2);
@@ -47,9 +57,8 @@ public class FlowTest {
     }
 
     @Test
+    @DirtiesContext
     public void testSuccessCounterbalanceRequest() {
-        RequestHandler requestHandler = new RequestHandler();
-        AccountService accountService = requestHandler.getAccountService();
 
         // prepare
         Account accountFromBeforeRequest = accountService.getAccount(1);

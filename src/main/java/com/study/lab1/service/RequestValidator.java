@@ -3,9 +3,16 @@ package com.study.lab1.service;
 import com.study.lab1.dao.UserDao;
 import com.study.lab1.model.Request;
 import com.study.lab1.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RequestValidator {
-    private UserDao userDao = new UserDao();
+
+    @Qualifier("userCacheDaoImpl")
+    @Autowired
+    private UserDao userDao;
 
     public void validate(Request request) {
         long userId = request.getUserId();
